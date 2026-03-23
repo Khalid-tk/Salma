@@ -3,6 +3,7 @@ import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { useEffect, useMemo, useRef, useState } from "react";
 import CursorSystem from "./components/cursor/CursorSystem";
 import ProgressHint from "./components/dialogue/ProgressHint";
+import SiteHeader from "./components/SiteHeader";
 import WorldScene from "./components/scene/WorldScene";
 import { useCursorTracking } from "./hooks/useCursorTracking";
 import { useBloomStore } from "./store/bloomStore";
@@ -86,6 +87,7 @@ export default function App() {
           />
         </EffectComposer>
       </Canvas>
+      <SiteHeader />
       <ProgressHint />
       <div id="cursor-orb" />
       <div id="cursor-trail" />
