@@ -1,0 +1,162 @@
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Mobile browser chrome / notches */
+  min-height: 100%;
+  min-height: 100dvh;
+  min-height: 100svh;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  min-height: 100dvh;
+  min-height: 100svh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: radial-gradient(circle at 45% 20%, #2b3347 0%, #171b27 58%, #10131b 100%);
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  cursor: none;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.experience {
+  position: fixed;
+  inset: 0;
+  touch-action: none;
+  isolation: isolate;
+}
+
+/* WebGL canvas must stay under DOM overlays (cursor text, hints) */
+.experience canvas {
+  position: relative;
+  z-index: 0;
+}
+
+body.is-touch {
+  cursor: none;
+}
+
+.progress-hint {
+  position: fixed;
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.progress-hint__count {
+  font-size: clamp(12px, 2.8vw, 14px);
+  letter-spacing: 0.28em;
+  text-transform: lowercase;
+  color: rgba(230, 222, 210, 0.45);
+  font-weight: 500;
+}
+
+.progress-hint__sub {
+  margin-top: 0.35rem;
+  font-size: clamp(11px, 2.5vw, 13px);
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: rgba(210, 200, 190, 0.38);
+}
+
+body.is-touch #cursor-orb {
+  width: 22px;
+  height: 22px;
+}
+
+body.is-touch #cursor-trail {
+  width: 52px;
+  height: 52px;
+}
+
+/* Touch: slightly larger copy, more offset from finger */
+body.is-touch .cursor-text {
+  font-size: clamp(14px, 4.2vw, 17px);
+  line-height: 1.35;
+  max-width: min(88vw, 20rem);
+}
+
+/* CursorText: extra offset on coarse pointers is applied in JSX */
+
+/* Narrow screens: keep hint readable near edges */
+@media (max-width: 480px) {
+  .progress-hint {
+    padding-left: max(0.5rem, env(safe-area-inset-left));
+    padding-right: max(0.5rem, env(safe-area-inset-right));
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+}
+
+canvas {
+  display: block;
+}
+
+#cursor-orb,
+#cursor-trail {
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  z-index: 300;
+  mix-blend-mode: screen;
+}
+
+#cursor-orb {
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle at 35% 35%, #fff7f2 0%, #ffd8c2 34%, #f2a780 66%, rgba(242, 167, 128, 0) 100%);
+  filter: blur(0.2px) drop-shadow(0 0 14px rgba(255, 188, 144, 0.82));
+}
+
+#cursor-trail {
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, rgba(255, 201, 171, 0.22) 0%, rgba(255, 186, 151, 0.08) 48%, rgba(255, 186, 151, 0) 80%);
+  filter: blur(2px);
+  opacity: 0.9;
+}
+
+.cursor-text {
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  color: rgba(248, 242, 235, 0.98);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  line-height: 1.2;
+  opacity: 0;
+  transition: opacity 420ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 320ms ease;
+  text-shadow:
+    0 0 12px rgba(0, 0, 0, 0.75),
+    0 1px 10px rgba(0, 0, 0, 0.55);
+  z-index: 400;
+  user-select: none;
+  max-width: min(90vw, 22rem);
+}
+
+.cursor-text.show {
+  opacity: 1;
+}
